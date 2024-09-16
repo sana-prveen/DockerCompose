@@ -1,0 +1,32 @@
+version: '3'
+services:
+  # Node.js Web Application
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: node-docker-app-container
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: password
+      DB_NAME: mydb
+    networks:
+      - app-network
+
+  # MySQL Database
+  db:
+    image: mysql:5.7
+    container_name: mysql-db-container
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
